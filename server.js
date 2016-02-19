@@ -1,13 +1,33 @@
 var WebSocketServer = require('websocket').server;
 var http = require('http');
 
+
+
+var express = require('express');
+var app = express();
+
+var port = process.env.PORT || 8080;
+
+app.set('view engine', 'ejs');
+
+app.use(express.static(__dirname+'/public'));
+
+app.get('/', function(req, res) {
+  res.render('index')
+});
+
+app.listen(port, function() {
+  console.log('Express App is running on port: '+port);
+});
+
+
 var server = http.createServer(function(request, response) {
     console.log((new Date()) + ' Received request for ' + request.url);
     response.writeHead(404);
     response.end();
 });
-server.listen(8080, function() {
-    console.log((new Date()) + ' Server is listening on port 8080');
+server.listen(3000, function() {
+    console.log((new Date()) + 'HTTP Server is listening on port 3000');
 });
 
 // Create Websocket Server
