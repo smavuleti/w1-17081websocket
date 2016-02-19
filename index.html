@@ -8,7 +8,8 @@ function WebSocketTest()
   if ("WebSocket" in window)
   {
      alert("WebSocket is supported by your Browser!");
-     var ws = new WebSocket("ws://localhost:3000", 'echo-protocol');
+     var host = location.origin.replace(/^http/, 'ws');
+     var ws = new WebSocket(host, 'echo-protocol');
 
      ws.onopen = function()
      {
