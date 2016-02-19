@@ -5,6 +5,8 @@ var http = require('http');
 var express = require('express');
 var app = express();
 
+var port = process.env.PORT || 8080;
+
 app.use(express.static(__dirname + "/"))
 
 var server = http.createServer(app, function(request, response) {
@@ -12,8 +14,8 @@ var server = http.createServer(app, function(request, response) {
     response.writeHead(404);
     response.end();
 });
-server.listen(3000, function() {
-    console.log((new Date()) + 'HTTP Server is listening on port 3000');
+server.listen(port, function() {
+    console.log((new Date()) + 'HTTP Server is listening on port'+port);
 });
 
 // Create Websocket Server
