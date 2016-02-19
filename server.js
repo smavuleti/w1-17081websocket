@@ -12,7 +12,7 @@ var server = http.createServer(app, function(request, response) {
     response.writeHead(404);
     response.end();
 });
-server.listen(8080, function() {
+server.listen(3000, function() {
     console.log((new Date()) + 'HTTP Server is listening on port 3000');
 });
 
