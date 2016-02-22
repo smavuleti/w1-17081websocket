@@ -25,7 +25,7 @@ io.on('connection', function(socket){
    }); 
 
    socket.on('disconnect', function(){
-    if(scoket.name !== 'undefined'){
+    if(socket.name !== 'undefined'){
     console.log('user disconnected');
     socket.broadcast.emit('chat message', socket.name + ' has disconnected from the chat. ');
   }
