@@ -1,56 +1,48 @@
-<!DOCTYPE HTML>
+<!doctype html>
 <html>
-<head>
-<script type="text/javascript">
+  <head>
+    <title>Socket.IO chat</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
 
-function WebSocketTest()
-{
-  if ("WebSocket" in window)
-  {
-     alert("WebSocket is supported by your Browser!");
-     var host = location.origin.replace(/^http/, 'ws');
-     var ws = new WebSocket(host, 'echo-protocol');
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 
-     ws.onopen = function()
-     {
-        // Web Socket is connected, send data using send()
-        ws.send("How are you? ");
-        alert("How are you? ");
-     };
+<script>
+  var socket = io();
+var name = prompt('Enter your name?');
+  socket.on('connect', function(msg){
+  console.log(name);
+  while(name == 'null'){
+    name = prompt('Enter your name?')
+    }
+  socket.emit('join', name);
+  });
 
-     // The message event occurs when client receives data from server.
-     ws.onmessage = function (evt) 
-     { 
-        var received_msg = evt.data;
-        alert(received_msg);
-     };
+  $('form').submit(function(){
+    socket.emit('chat message', $('#m').val());
+    $('#m').val('');
+    return false;
+  });
 
-     // The close event occurs when connection is closed.
-     ws.onclose = function()
-     { 
-        // websocket is closed.
-        alert("Connection is closed..."); 
-     };
+  socket.on('chat message', function(msg){
+    $('#messages').append($('<li>').text(msg));
+  });
 
-     // The error event occurs when connection is closed.
-     ws.onerror = function()
-     { 
-        // There is erro
-        alert("WebSocket error..."); 
-     };
-  }
-  else
-  {
-     // The browser doesn't support WebSocket
-     alert("WebSocket NOT supported by your Browser!");
-  }
-}
 </script>
-</head>
-<body>
-<div id="sse">
-   <a href="javascript:WebSocketTest()">Run WebSocket</a>
-</div>
-</body>
+  </body>
 </html>
-    
