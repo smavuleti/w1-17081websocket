@@ -12,6 +12,7 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
 
+
     socket.on('chat message', function(msg){
     console.log('message: ' + msg);
    io.emit('chat message',socket.name + ':' + msg);
@@ -24,8 +25,10 @@ io.on('connection', function(socket){
    }); 
 
    socket.on('disconnect', function(){
+    if(scoket.name !== 'undefined'){
     console.log('user disconnected');
     socket.broadcast.emit('chat message', socket.name + ' has disconnected from the chat. ');
+  }
   });
 });
 
